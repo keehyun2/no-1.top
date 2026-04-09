@@ -275,34 +275,6 @@
   }
   .github-link:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── CONTACT ── */
-  #contact { background: var(--bg2); }
-  .contact-inner {
-    max-width: 600px; margin: 0 auto; text-align: center;
-  }
-  .contact-inner h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1; margin-bottom: 1.5rem;
-  }
-  .contact-inner p { color: var(--muted); margin-bottom: 2.5rem; }
-  .contact-links {
-    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
-  }
-  .contact-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 24px; border-radius: 4px;
-    font-size: 13px; letter-spacing: 0.06em; text-decoration: none;
-    border: 1px solid var(--border); color: var(--text);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .contact-btn:hover { border-color: var(--border-hover); background: var(--bg3); }
-  .contact-btn.primary {
-    background: var(--accent); color: #0c0c0e;
-    border-color: transparent; font-weight: 700;
-  }
-  .contact-btn.primary:hover { opacity: 0.88; background: var(--accent); }
-
   /* ── FOOTER ── */
   footer {
     padding: 2rem 2.5rem;
@@ -341,7 +313,7 @@
     <a href="#stack">기술</a>
     <a href="#about">소개</a>
     <a href="#github">GitHub</a>
-    <a href="#contact">연락</a>
+    <a href="https://my-profile.keehyun2.workers.dev" target="_blank" rel="noopener">프로필</a>
   </div>
 </nav>
 
@@ -352,8 +324,8 @@
   <div class="hero-badge">독립 소프트웨어 스튜디오</div>
   <h1>넘버원<br><em>소프트웨어</em></h1>
   <p class="hero-sub">모바일, 웹, 데스크탑을 아우르는 소프트웨어를 혼자서 설계하고 만듭니다.</p>
-  <a href="#products" class="hero-cta">
-    제품 보기
+  <a href="https://my-profile.keehyun2.workers.dev" class="hero-cta" target="_blank" rel="noopener">
+    프로필 보기
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
   </a>
 </div>
@@ -363,17 +335,10 @@
   <div class="section-label">제품 목록</div>
   <div class="products-header">
     <h2 class="products-title">직접 만든<br>소프트웨어들</h2>
-    <div class="products-count">04</div>
+    <div class="products-count">03</div>
   </div>
 
   <div class="products-grid">
-
-    <a class="product-card fade-up" href="https://my-profile.keehyun2.workers.dev/" target="_blank" rel="noopener">
-      <div class="product-tag"><span class="tag-dot web"></span> Web · Profile</div>
-      <div class="product-name">개발자 프로필</div>
-      <p class="product-desc">개인 소개 및 포트폴리오 사이트. Cloudflare Workers 위에서 동작하는 경량 웹 앱입니다.</p>
-      <span class="product-link">방문하기 →</span>
-    </a>
 
     <a class="product-card fade-up" href="https://play.google.com/store/apps/details?id=top.no1.wsmk.app" target="_blank" rel="noopener">
       <div class="product-tag"><span class="tag-dot mobile"></span> Android · Flutter</div>
@@ -431,7 +396,7 @@
     </div>
     <div class="about-stats fade-up">
       <div class="stat-box">
-        <div class="stat-num">4+</div>
+        <div class="stat-num">3</div>
         <div class="stat-label">출시된 제품</div>
       </div>
       <div class="stat-box">
@@ -462,19 +427,6 @@
     <a class="github-link" href="https://github.com/keehyun2" target="_blank" rel="noopener">
       GitHub에서 더 보기 →
     </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="section-label" style="justify-content:center;">연락하기</div>
-    <h2>함께<br><em style="font-family:'DM Serif Display',serif;font-style:italic;color:var(--accent);">일해요</em></h2>
-    <p>프로젝트 의뢰, 협업 제안, 피드백 모두 환영합니다.</p>
-    <div class="contact-links">
-      <a class="contact-btn" href="https://github.com/keehyun2" target="_blank" rel="noopener">GitHub</a>
-      <a class="contact-btn" href="https://my-profile.keehyun2.workers.dev/" target="_blank" rel="noopener">프로필 사이트</a>
-    </div>
   </div>
 </section>
 
