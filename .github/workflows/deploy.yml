@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "index.html"
+          source: "index.html,favicon.svg"
           target: "~/no-1.top"
           overwrite: true
 
