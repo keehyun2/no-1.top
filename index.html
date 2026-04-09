@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>넘버원 소프트웨어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0c0e;
+    --bg2: #141416;
+    --bg3: #1c1c20;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.18);
+    --accent: #e8ff47;
+    --accent2: #47ffe8;
+    --text: #f0efe8;
+    --muted: rgba(240,239,232,0.45);
+    --muted2: rgba(240,239,232,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(12,12,14,0.85);
+    backdrop-filter: blur(16px);
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--accent); text-decoration: none;
+  }
+  .nav-logo span { color: var(--text); opacity: 0.6; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 30%, rgba(232,255,71,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(71,255,232,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,255,71,0.1); border: 1px solid rgba(232,255,71,0.25);
+    border-radius: 100px; padding: 6px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent); letter-spacing: 0.1em;
+    margin-bottom: 2rem; width: fit-content;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.95; letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 480px; margin-bottom: 3rem; font-weight: 300;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--accent); color: #0c0c0e;
+    border-radius: 4px; padding: 14px 28px;
+    font-size: 14px; font-weight: 700; text-decoration: none;
+    letter-spacing: 0.04em; transition: opacity 0.2s, transform 0.2s;
+  }
+  .hero-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+  .hero-cta svg { width: 16px; height: 16px; }
+
+  /* ── SECTION ── */
+  section { padding: 6rem 2.5rem; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.14em; color: var(--muted2);
+    text-transform: uppercase; margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px;
+    background: var(--border);
+  }
+
+  /* ── PRODUCTS ── */
+  #products { background: var(--bg2); }
+  .products-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .products-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+  }
+  .products-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3rem; color: var(--muted2); line-height: 1;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .product-card {
+    background: var(--bg2);
+    padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: background 0.25s;
+    text-decoration: none; color: inherit;
+    position: relative; overflow: hidden;
+  }
+  .product-card:hover { background: var(--bg3); }
+  .product-card::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .product-card:hover::after { transform: scaleX(1); }
+
+  .product-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; color: var(--muted2);
+    text-transform: uppercase;
+  }
+  .tag-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .tag-dot.web { background: var(--accent); }
+  .tag-dot.mobile { background: var(--accent2); }
+  .tag-dot.desktop { background: #ff8c47; }
+
+  .product-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; line-height: 1.2;
+  }
+  .product-desc {
+    font-size: 14px; color: var(--muted); flex: 1; line-height: 1.7;
+  }
+  .product-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.06em; color: var(--accent);
+    text-decoration: none; transition: gap 0.2s;
+  }
+  .product-card:hover .product-link { gap: 10px; }
+
+  /* ── STACK ── */
+  .stack-grid {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 2rem;
+  }
+  .stack-pill {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 4px; padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .stack-pill:hover { border-color: var(--border-hover); color: var(--text); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg); }
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.5rem; line-height: 1.1;
+  }
+  .about-text p {
+    color: var(--muted); font-size: 15px;
+    margin-bottom: 1rem; line-height: 1.8;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .stat-box {
+    background: var(--bg2); padding: 2rem;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem; color: var(--accent); line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px; color: var(--muted);
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); }
+  .contact-inner {
+    max-width: 600px; margin: 0 auto; text-align: center;
+  }
+  .contact-inner h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .contact-inner p { color: var(--muted); margin-bottom: 2.5rem; }
+  .contact-links {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .contact-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 4px;
+    font-size: 13px; letter-spacing: 0.06em; text-decoration: none;
+    border: 1px solid var(--border); color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-btn:hover { border-color: var(--border-hover); background: var(--bg3); }
+  .contact-btn.primary {
+    background: var(--accent); color: #0c0c0e;
+    border-color: transparent; font-weight: 700;
+  }
+  .contact-btn.primary:hover { opacity: 0.88; background: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--muted2); flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted2); font-size: 12px;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">NO<span>.1</span> SOFTWARE</a>
+  <div class="nav-links">
+    <a href="#products">제품</a>
+    <a href="#stack">기술</a>
+    <a href="#about">소개</a>
+    <a href="#contact">연락</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">독립 소프트웨어 스튜디오</div>
+  <h1>넘버원<br><em>소프트웨어</em></h1>
+  <p class="hero-sub">모바일, 웹, 데스크탑을 아우르는 소프트웨어를 혼자서 설계하고 만듭니다.</p>
+  <a href="#products" class="hero-cta">
+    제품 보기
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+  </a>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-label">제품 목록</div>
+  <div class="products-header">
+    <h2 class="products-title">직접 만든<br>소프트웨어들</h2>
+    <div class="products-count">04</div>
+  </div>
+
+  <div class="products-grid">
+
+    <a class="product-card fade-up" href="https://my-profile.keehyun2.workers.dev/" target="_blank" rel="noopener">
+      <div class="product-tag"><span class="tag-dot web"></span> Web · Profile</div>
+      <div class="product-name">개발자 프로필</div>
+      <p class="product-desc">개인 소개 및 포트폴리오 사이트. Cloudflare Workers 위에서 동작하는 경량 웹 앱입니다.</p>
+      <span class="product-link">방문하기 →</span>
+    </a>
+
+    <a class="product-card fade-up" href="https://play.google.com/store/apps/details?id=top.no1.wsmk.app" target="_blank" rel="noopener">
+      <div class="product-tag"><span class="tag-dot mobile"></span> Android · Flutter</div>
+      <div class="product-name">농산물 실시간 경매 조회</div>
+      <p class="product-desc">농산물 도매 경매 현황을 실시간으로 확인할 수 있는 안드로이드 앱. Google Play에서 다운로드 가능합니다.</p>
+      <span class="product-link">Play Store →</span>
+    </a>
+
+    <a class="product-card fade-up" href="https://turbo.no-1.top" target="_blank" rel="noopener">
+      <div class="product-tag"><span class="tag-dot web"></span> Web · Go + React</div>
+      <div class="product-name">운수업 관리 시스템</div>
+      <p class="product-desc">운수 업무를 위한 웹 기반 관리 플랫폼. Go 백엔드 + React/TypeScript 프론트엔드로 구성된 풀스택 프로젝트입니다.</p>
+      <span class="product-link">사이트 방문 →</span>
+    </a>
+
+    <a class="product-card fade-up" href="https://github.com/keehyun2/analyze-log" target="_blank" rel="noopener">
+      <div class="product-tag"><span class="tag-dot desktop"></span> Desktop · Java</div>
+      <div class="product-name">Java 로그 분석기</div>
+      <p class="product-desc">Java 애플리케이션 로그를 분석하고 시각화하는 데스크탑 도구. 스택 트레이스 하이라이팅 등 개발자 친화적 기능을 제공합니다.</p>
+      <span class="product-link">GitHub →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="section-label">기술 스택</div>
+  <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3rem); margin-bottom:.5rem;">사용하는 기술들</h2>
+  <p style="color:var(--muted); font-size:14px; max-width:480px; margin-bottom:0;">다양한 도메인과 플랫폼을 커버하는 멀티스택 개발자입니다.</p>
+  <div class="stack-grid">
+    <span class="stack-pill">Go</span>
+    <span class="stack-pill">React</span>
+    <span class="stack-pill">TypeScript</span>
+    <span class="stack-pill">Flutter</span>
+    <span class="stack-pill">Dart</span>
+    <span class="stack-pill">Java</span>
+    <span class="stack-pill">Node.js</span>
+    <span class="stack-pill">PostgreSQL</span>
+    <span class="stack-pill">Cloudflare Workers</span>
+    <span class="stack-pill">Docker</span>
+    <span class="stack-pill">Vercel</span>
+    <span class="stack-pill">Oracle Cloud</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">소개</div>
+  <div class="about-layout">
+    <div class="about-text fade-up">
+      <h2>혼자서 만들고,<br>직접 운영합니다</h2>
+      <p>넘버원 소프트웨어는 1인 개발 스튜디오입니다. 기획부터 디자인, 개발, 배포까지 모든 과정을 직접 담당합니다.</p>
+      <p>모바일 앱, 웹 서비스, 데스크탑 툴, 게임까지 플랫폼에 구애받지 않고 필요한 소프트웨어를 만들어냅니다.</p>
+    </div>
+    <div class="about-stats fade-up">
+      <div class="stat-box">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">출시된 제품</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4</div>
+        <div class="stat-label">지원 플랫폼</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">개발자</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">계속 추가 예정</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center;">연락하기</div>
+    <h2>함께<br><em style="font-family:'DM Serif Display',serif;font-style:italic;color:var(--accent);">일해요</em></h2>
+    <p>프로젝트 의뢰, 협업 제안, 피드백 모두 환영합니다.</p>
+    <div class="contact-links">
+      <a class="contact-btn" href="https://github.com/keehyun2" target="_blank" rel="noopener">GitHub</a>
+      <a class="contact-btn" href="https://my-profile.keehyun2.workers.dev/" target="_blank" rel="noopener">프로필 사이트</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">NO.1 SOFTWARE</div>
+  <div>© 2025 넘버원 소프트웨어. All rights reserved.</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

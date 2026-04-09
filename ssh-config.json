@@ -1,0 +1,9 @@
+{
+  "api-server": {
+    "name": "api-server",
+    "host": "152.70.95.176",
+    "port": 22,
+    "username": "ubuntu",
+    "privateKey": "C:/dev/keyfile/oracle-cloud-152.70.95.176-java.key"
+  }
+}
